@@ -4,8 +4,10 @@ const Category = db.Category;
 const Cart = db.Cart;
 const User = db.User;
 const Sequelize = require('sequelize');
+const { decode } = require('jsonwebtoken');
 const sequelize = db.sequelize;
 const Op = Sequelize.Op;
+const jwt = require('jsonwebtoken')
 
 
 const appsController = {
@@ -88,22 +90,22 @@ const appsController = {
             })
     },
     addCart: (req, res) => {
-        
-        App.findByPk(req.body.id)
+        const decoded = jwt.decode(req.body.token)
+        App.findByPk(req.body.idApps)
             .then(app => {
                 let store = {
                     quantity: req.body.quantity,
                     price: app.price,
                     state: 0,
-                    idUser: req.body.idUser,
-                    idApps: req.body.id,
+                    idUser: decoded.userReact.idUser,
+                    idApps: req.body.idApps,
                     appName: app.name,
                     totalPrice: app.price * req.body.quantity
                 }
                 return Cart.create(store)
             })
             .then((resultado) => {
-                 res.json('hola')
+                 res.json(resultado)
             })
             .catch(function(error){
                 res.json(error);

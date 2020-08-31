@@ -11,7 +11,7 @@ const controller = {
     vista: function(req, res){
             let categories = Category.findAll({
                 order: [
-                    ['id', 'ASC']
+                    ['name', 'ASC']
                 ]
                 })
                 .then(function(categories){  

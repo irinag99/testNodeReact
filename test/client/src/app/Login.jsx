@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
+import { useHistory } from 'react-router-dom';
 
 export function Login() {
+
   const [errors, setErrors] = useState([])
+  const history = useHistory();
 
   const handleSubmit = (values, { setSubmiting }) => {
     const miInit = {
@@ -23,7 +26,9 @@ export function Login() {
     if (response.errors?.length > 0) {
       setErrors(response.errors);
     }else{
-      console.log('2')
+      console.log(response)
+      history.push('/')
+      window.sessionStorage.setItem("token", response.token)
     }
   }
 

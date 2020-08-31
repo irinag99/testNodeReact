@@ -43,7 +43,8 @@ const userController = {
                     if (bcrypt.compareSync(req.body.password, u.password)) {
                         const payload = {
                             userReact: {
-                                email: req.body.email
+                                email: req.body.email,
+                                idUser: u.id
                             }
                         }
                         jwt.sign(
